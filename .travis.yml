@@ -8,3 +8,13 @@ after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; docker push therickys93/wikidatabase;
   fi
+- sh set_tags.sh
+deploy:
+  provider: releases
+  file_glob: "true"
+  skip_cleanup: true
+  api_key:
+    secure: ShhefPNLu09aqoDICKek7P0/ABV/GvnWU7qT3wP3Y0SdtDcY97zuHfBqeqQ1LSCsEPOIK06DTj37Xgdt5nE3Cew3eaTse14YyEDUm4DK3Ice37Hcn/y7T+X+BR1TgWd1wIjPuwFgjrM1n/+rMlF0LKxLCghspHdWhmXX2JMXIyJL573huDlojsQadhgeZo8jYMFenP2cE2DNjESjviQ2PQDl07VspkAJjgNj2XqZ7pbBPwAv5p5qRcu4Eyz5V+Fb9E0gdACQiWsLibMTmTj2+R4Djg7mcY7+ByTjLOMSB7xo3H1U/5lhR2vo5bHzpkkPyzrJYqCVdC89ojQAj/1xZ34A7YH7mZ1l3Byd4C29i4B4Os/EwftNzrAcSzd33Ui1syS3qkJ7xvhDoxSbVKFn1DoLr0KFCPTd8UeJQw888H3mCf+N/r/2L+8B+3C6dw9ERp2a/jRIAGZqX2RzMg+Bw32yMAkVgQr5hDH0LTTxhS0vuqCTKlEjr+j8QoAIgWOIgSRlHcdv0AXgAuk++Nq1nCHgmz2l2JNeVmXUWDuo//wcX8ogQC1VSLbXKB6u95EVCHBNvXg9kGZ5OZnsTE0JQQaJEabuZCjqkaf0KXMokBi1AOXcKZ05WjUHcvLvDChB3JaSxc7xcI1ud7higM7agexvR+lDCakzDDYoqbdWVTI=
+  on:
+    branch: master
+    repo: therickys93/wikidatabase
