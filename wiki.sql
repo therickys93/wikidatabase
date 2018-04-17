@@ -179,7 +179,6 @@ ALTER TABLE public.connections OWNER TO postgres;
 --
 
 CREATE SEQUENCE public.connections_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -255,7 +254,6 @@ ALTER TABLE public.messages OWNER TO postgres;
 --
 
 CREATE SEQUENCE public.messages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
