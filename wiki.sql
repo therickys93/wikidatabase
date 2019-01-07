@@ -168,9 +168,9 @@ CREATE TABLE public.connections (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     key character varying(255) NOT NULL,
-    pin integer NOT NULL
+    pin integer NOT NULL,
+    user_id character varying(255) DEFAULT NULL
 );
-
 
 ALTER TABLE public.connections OWNER TO postgres;
 
@@ -243,7 +243,8 @@ CREATE TABLE public.messages (
     endpoint character varying(255) NOT NULL,
     message text NOT NULL,
     date_hour timestamp without time zone NOT NULL default now(),
-    type character varying(255) NOT NULL
+    type character varying(255) NOT NULL,
+    user_id character varying(255) DEFAULT NULL
 );
 
 
