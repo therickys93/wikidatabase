@@ -216,23 +216,99 @@ COPY public.connections (id, name, key, pin, user_id) FROM stdin;
 
 SELECT pg_catalog.setval('public.connections_id_seq', 1, false);
 
-CREATE UNIQUE INDEX unique_name_key_pin_when_user_id_not_null
+CREATE UNIQUE INDEX connections_unique_name_key_pin_when_user_id_not_null
     ON public.connections
        (name, key, pin, user_id)
  WHERE user_id IS NOT NULL;
 
-CREATE UNIQUE INDEX unique_name_key_pin_when_user_id_is_null
+CREATE UNIQUE INDEX connections_unique_name_key_pin_when_user_id_is_null
     ON public.connections
        (name, key, pin)
  WHERE user_id IS NULL;
 
-CREATE UNIQUE INDEX unique_name_when_user_id_not_null
+CREATE UNIQUE INDEX connections_unique_name_when_user_id_not_null
     ON public.connections
        (name, user_id)
  WHERE user_id IS NOT NULL;
 
-CREATE UNIQUE INDEX unique_name_when_user_id_is_null
+CREATE UNIQUE INDEX connections_unique_name_when_user_id_is_null
     ON public.connections
+       (name)
+ WHERE user_id IS NULL;
+
+--
+-- Name: sensors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sensors (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    key character varying(255) NOT NULL,
+    pin integer NOT NULL,
+    user_id character varying(255) DEFAULT NULL
+);
+
+ALTER TABLE public.sensors OWNER TO postgres;
+
+--
+-- Name: sensors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.sensors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sensors_id_seq OWNER TO postgres;
+
+--
+-- Name: sensors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.sensors_id_seq OWNED BY public.sensors.id;
+
+
+--
+-- Name: connections id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sensors ALTER COLUMN id SET DEFAULT nextval('public.sensors_id_seq'::regclass);
+
+
+--
+-- Data for Name: connections; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sensors (id, name, key, pin, user_id) FROM stdin;
+\.
+
+
+--
+-- Name: connections_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.sensors_id_seq', 1, false);
+
+CREATE UNIQUE INDEX sensors_unique_name_key_pin_when_user_id_not_null
+    ON public.sensors
+       (name, key, pin, user_id)
+ WHERE user_id IS NOT NULL;
+
+CREATE UNIQUE INDEX sensors_unique_name_key_pin_when_user_id_is_null
+    ON public.sensors
+       (name, key, pin)
+ WHERE user_id IS NULL;
+
+CREATE UNIQUE INDEX sensors_unique_name_when_user_id_not_null
+    ON public.sensors
+       (name, user_id)
+ WHERE user_id IS NOT NULL;
+
+CREATE UNIQUE INDEX sensors_unique_name_when_user_id_is_null
+    ON public.sensors
        (name)
  WHERE user_id IS NULL;
 
